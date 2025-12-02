@@ -5,7 +5,8 @@
   "en": "Oven",
   "es": "Horno"
 },
-{  "_id": {
+{
+  "_id": {
     "$oid": "69274b23d12f5dc03e62ad9e"
   },
   "en": "Slow Cooker",
@@ -31,11 +32,4 @@
   },
   "en": "Microwave",
   "es": "Microondas"
-},
-{  "_id": {
-    "$oid": ""
-  },
-  "en": "saucepan with lid",
-  "es": "cacerola con tapa"
-}
-]
+}]
