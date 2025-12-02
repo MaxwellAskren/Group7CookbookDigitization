@@ -28,7 +28,7 @@ const recipeSchema = new mongoose.Schema({
             ref: 'Appliance'
         },
     ],
-    
+    totalCost: Number,
 });
 
 export default mongoose.models.Recipe || mongoose.model('Recipe', recipeSchema);
