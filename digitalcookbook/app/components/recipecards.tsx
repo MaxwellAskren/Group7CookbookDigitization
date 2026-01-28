@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useLang } from "./languageprovider";
+
 interface Props {
   recipes: any[];
 }
 
 export default function RecipeGrid({ recipes }: Props) {
+  const langContext = useLang();
+  const lang = langContext?.lang ?? 'en';
   try {
     return (
       <div className="mt-6 grid gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
@@ -17,7 +21,7 @@ export default function RecipeGrid({ recipes }: Props) {
               {recipe.imageURI ? (
                 <img
                   src={recipe.imageURI}
-                  alt={recipe.title?.en ?? "Recipe image"}
+                  alt={recipe.title?.[lang] ?? "Recipe image"}
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -30,11 +34,11 @@ export default function RecipeGrid({ recipes }: Props) {
             {/* Content */}
             <div className="card-body">
               <h2 className="card-title text-lg">
-                {recipe.title?.en}
+                {recipe.title?.[lang]}
               </h2>
 
               <p className="text-sm text-slate-600 line-clamp-3">
-                {recipe.instructions?.en}
+                {recipe.instructions?.[lang]}
               </p>
 
               {/* Tags */}

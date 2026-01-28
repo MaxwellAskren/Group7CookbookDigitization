@@ -1,5 +1,6 @@
 //app/components/singlerecipeui.tsx
 "use client";
+import { useLang } from "./languageprovider";
 
 type Recipe = {
   title?: { en?: string; es?: string };
@@ -14,7 +15,9 @@ type Recipe = {
 };
 
 export default function SingleRecipeUI({ recipe }: { recipe: Recipe }) {
-  const title = recipe?.title?.en ?? "Recipe";
+  const langContext = useLang();
+  const lang = langContext?.lang ?? 'en';
+  const title = recipe?.title?.[lang] ?? "Recipe";
   return (
     <main className="min-h-screen bg-base-100">
       <div className="mx-auto max-w-6xl px-6 pt-6">
@@ -88,8 +91,8 @@ export default function SingleRecipeUI({ recipe }: { recipe: Recipe }) {
                 INGREDIENTS
               </h2>
               <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
-                {recipe?.ingredientPlainText?.en ? (
-                  recipe.ingredientPlainText.en
+                {recipe?.ingredientPlainText?.[lang] ? (
+                  recipe.ingredientPlainText?.[lang]
                     .split("\n")
                     .map((line, i) => <li key={i}>{line.trim()}</li>)
                 ) : (

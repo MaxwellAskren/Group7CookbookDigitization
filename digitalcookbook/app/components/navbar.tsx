@@ -1,8 +1,14 @@
 // app/components/navbar.tsx
 //import React from "react";
+"use client";
 import Link from "next/link";
+import { useLang } from "@/app/components/languageprovider";
+
 
 export default function Navbar() {
+    const langContext = useLang()
+    if (!langContext) return null
+    const { lang, setLang } = langContext
     return (
         <div className="navbar bg-white text-black shadow-sm relative z-50">
 
@@ -309,6 +315,12 @@ export default function Navbar() {
             </li>
             </ul>
         </div>
+        <button
+            className="btn btn-sm"
+            onClick={() => setLang(lang === "en" ? "es" : "en")}
+            >
+            {lang.toUpperCase()}
+        </button>
         <div className="navbar-end"></div>
         </div>
     );
