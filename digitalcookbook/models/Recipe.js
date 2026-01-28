@@ -23,16 +23,32 @@ const recipeSchema = new mongoose.Schema({
         {
             ingredient: { type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient', required: true },
             amount: Number,
-            unit: String
+            unit: String,
+            en: String,
+            es: String,
+            costPerUnit: Number,
+            baseUnit: String,
+            productLink: String,
+            multiplier: Number
         },
     ],
     appliances: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Appliance'
+            _id: { type: mongoose.Schema.Types.ObjectId, ref: 'Appliance', required: true },
+            en: String,
+            es: String
         },
     ],
     totalCost: Number,
+    allergens:{
+        dairy: Boolean,
+        egg: Boolean,
+        wheat: Boolean,
+        soy: Boolean,
+        fish: Boolean,
+        peanuts: Boolean,
+        treeNuts: Boolean
+    }
 });
 
 export default mongoose.models.Recipe || mongoose.model('Recipe', recipeSchema);
