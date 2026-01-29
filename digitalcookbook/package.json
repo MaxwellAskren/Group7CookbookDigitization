@@ -11,10 +11,13 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "apify-client": "^2.22.0",
+    "axios": "^1.13.4",
     "cloudinary": "^2.8.0",
     "dotenv": "^17.2.3",
     "mongoose": "^8.20.1",
     "next": "^16.1.0",
+    "node-cron": "^4.2.1",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
