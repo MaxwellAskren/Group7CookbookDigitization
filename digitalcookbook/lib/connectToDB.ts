@@ -1,34 +1,23 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import mongoose from "mongoose";
+//cache this as global.mongoose to prevent multiple connections 
+let cached = (global as any).mongoose || { conn: null, promise: null };
 
-// Load environment variables from .env file
-dotenv.config({path: ".env.local"});
-
-// MongoDB connection URI from environment variables
-const URI = process.env.MONGODB_URI;
-
-// Ensure the MongoDB URI is defined
-if (!URI)
-    throw new Error("Please define the MONGODB_URI variable inside .env.local");
-
-// Global connection variable
-let connection: mongoose.Mongoose | null = null;
-
-// Function to connect to MongoDB
-export async function connectToDB(): Promise<mongoose.Mongoose> {
-    // Return existing connection if already connected
-    if (connection) {
-        return connection;
-
+//connectToDB() function that returns a connection that is the ONLY connection
+export async function connectToDB() {
+    if (cached.conn) {
+        return cached.conn;
     }
-    
-    // Establish a new connection if none exists
-    try {
-        connection = await mongoose.connect(URI as string);
-        return connection;
 
-    } catch (error) {
-        throw new Error("Error connecting to MongoDB", {cause: error as Error});
-        
+    if (!cached.promise) {
+        cached.promise = mongoose
+            .connect(process.env.MONGODB_URI as string, {
+                bufferCommands: false,
+            })
+            .then((mongoose) => mongoose);
     }
+
+    cached.conn = await cached.promise;
+    (global as any).mongoose = cached;
+
+    return cached.conn;
 }
