@@ -3,7 +3,7 @@
 import { ApifyClient } from 'apify-client';
 import Ingredient from "@/models/Ingredient";
 import { connectToDB } from "@/lib/connectToDB";
-
+import mongoose from "mongoose";
 //create that apify client
 const client = new ApifyClient({
     token: process.env.APIFY_TOKEN
@@ -40,6 +40,9 @@ export async function runOnce() {
         const { items } = await client.dataset(run.defaultDatasetId).listItems();
 
         //need to put these new prices into the db now
+        const tempPrices = mongoose.connection.collection("tempPrices");
+        //insert
+        await tempPrices.insertMany(items);
 
     } catch (err) {
         console.error("Error during test run:", err);
