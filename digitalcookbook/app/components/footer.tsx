@@ -1,8 +1,42 @@
 
-
+"use client";
 import Link from 'next/link';
+import { useLang } from '@/app/components/languageprovider'
 
+const STRINGS = {
+    en: {
+        quickLinks: "Quick Links",
+        resources: "Resources",
+        contact: "Contact",
+        social: "Social",
+        allRecipes: "All Recipes",
+        tools: "Tools",
+        homepage: "Home Page",
+        communityPartners: "Community Partners",
+        communityResources: "Community Resources",
+        email: "Email",
+        copyright: "Copyright © ",
+        allRightsReserved: " - All rights reserved",
+    },
+    es: {
+        quickLinks: "Enlaces Rápidos",
+        resources: "Recursos",
+        contact: "Contacto",
+        social: "Social",
+        allRecipes: "Todas las Recetas",
+        tools: "Herramientas",
+        homepage: "Inicio",
+        communityPartners: "Socios Comunitarios",
+        communityResources: "Recursos Comunitarios",
+        email: "Correo Electrónico",
+        copyright: "Derechos de Autor © ",
+        allRightsReserved: " - Todos los derechos reservados",
+    },
+};
 export default function Footer(){
+    const langContext = useLang();
+    const lang = langContext?.lang ?? 'en';
+    const t = STRINGS[lang];
     return (
 
         <>
@@ -10,50 +44,57 @@ export default function Footer(){
 
         {/* Quick Links */}
         <nav>
-            <h6 className="footer-title">Quick Links</h6>
+            <h6 className="footer-title">{t.quickLinks}</h6>
+
+                <Link
+                    href="/"
+                    rel="noopener noreferrer"
+                    className="link link-hover"  >
+                    {t.homepage}
+                </Link>
             
                 <Link
-                    href="/all-recipes"
-            
+                    href="/recipes?ingredients="
                     rel="noopener noreferrer"
                     className="link link-hover" >
-                    All Recipes
+                    {t.allRecipes}
                 </Link>
 
-               
-    
                 <Link
                     href="/tools"
                     rel="noopener noreferrer"
                     className="link link-hover" >
-                    Tools
+                    {t.tools}
                 </Link>
-         
-
-                <Link
-                    href="/shopping-list"
-                    rel="noopener noreferrer"
-                    className="link link-hover" >
-                    Shopping List
-                </Link>
-
         </nav>
 
         {/* Resources */}
         <nav>
-            <h6 className="footer-title">Resources</h6>
-            <a className="link link-hover">Community Partners</a>
+            <h6 className="footer-title">{t.resources}</h6>
+                <Link
+                    href="/comm-partners"
+                    rel="noopener noreferrer"
+                    className="link link-hover" >
+                    {t.communityPartners}
+                </Link>
+
+                <Link
+                    href="/comm-resources"
+                    rel="noopener noreferrer"
+                    className="link link-hover" >
+                    {t.communityResources}
+                </Link>
         </nav>
 
         {/* Contact */}
         <nav>
-            <h6 className="footer-title">Contact</h6>
-            <a className="link link-hover">Email</a>
+            <h6 className="footer-title">{t.contact}</h6>
+            <a className="link link-hover">{t.email}</a>
         </nav>
 
         {/* Social */}
         <nav>
-            <h6 className="footer-title">Social</h6>
+            <h6 className="footer-title">{t.social}</h6>
             <div className="flex gap-4 mt-2">
             {/* Twitter */}
             <a>
@@ -100,24 +141,23 @@ export default function Footer(){
         </nav>
 
         </footer>
-    
+
+        {/*Logos*/}
         <footer className="footer sm:footer-horizontal bg-base-300 text-base-content p-10 flex justify-center gap-20 pr-40">
-            <img src="pep_logo.png" alt="LEADERSHIP PUTNAM Logo" className="w-50 h-auto max-w-full" />
-            <img src="logo.png" alt="LEADERSHIP PUTNAM Logo" className="w-24 h-auto max-w-full -mt-4" />
+            <img src="pep_logo.png" 
+            alt="LEADERSHIP PUTNAM Logo" 
+            className="w-50 h-auto max-w-full" />
+
+            <img src="LP_logo.png" 
+            alt="LEADERSHIP PUTNAM Logo" 
+            className="w-24 h-auto max-w-full -mt-4" />
         </footer>
 
         <footer className="footer sm:footer-horizontal bg-black text-white p-4 flex items-center justify-between">
             <aside className="text-center mx-auto">
-                <p>Copyright © {new Date().getFullYear()} - All rights reserved</p>
+                <p>{t.copyright}{new Date().getFullYear()}{t.allRightsReserved}</p>
             </aside>
         </footer>
-
         </>
-
-
     );
-
-
-
 }
-
